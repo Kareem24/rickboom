@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+    href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <title>Music App </title>
 </head>
 <body>
@@ -12,7 +14,9 @@
         <div class="music-container">
             <!-- NAVBAR -->
             <nav class="navbar">
-                <button class="backBtn">&larr;</button>
+                <button class="backBtn">
+                    <i class='bx bx-left-arrow-alt' ></i>
+                </button>
 
                 <h3 class="shelf">My books</h3>
 
@@ -20,14 +24,14 @@
             </nav>
             <!-- TRACK IMAGES  -->
             <div class="track-img">
-                <img src="images/cart-02.jpg" alt="track img">
+                <img src="images/image.jpg" alt="track img" id="track-image" class="image pause">
+                <!-- <div class="image " id="track-image"></div> -->
             </div>
             <!-- SONG TITLE AND ARTISTE NAME -->
             <div class="title-bar">
-                <p class="artist">Mark Marison</p>
+                <p class="artist">partoranking</p>
 
-                <h2 class="song-title">
-                    The Subtle Art of Not Giving A f*ck
+                <h2 class="song-title">ABULE
                 </h2>
 
                 <p class="chapter">chapter 1</p>
@@ -43,25 +47,34 @@
             </div>
             <div class="controls">
                 <!-- previous button -->
-                <button class="btn controls prev">prev</button>
+                <button class="controlBtn prev">
+                    <i class='bx bx-skip-previous' ></i>
+                </button>
                 <!-- backward with 30s -->
-                <button class="btn controls sub">-30s</button>
+                <button class="controlBtn sub">-30s</button>
                 <!-- pause and play button -->
-                <button class="btn controls play">play</button>
+                <button class="controlBtn play">play
+                    <i class='bx bx-pause'></i>
+                </button>
                 <!-- forward with 30s -->
-                <button class="btn controls add">+30s</button>
+                <button class="controlBtn add">+30s</button>
                 <!-- next buttton -->
-                <button class="btn controls next">nxt</button>
+                <button class="controlBtn next">
+                    <i class='bx bx-skip-next' ></i>
+                </button>
             </div>
-            <footer>
-                <button class="bookmark">bok</button>
-                <button class="toggle-mode">drk</button>
-                <button class="mult-1">mult</button>
-                <button class="list">list</button>
+            <footer class="footer-links">
+                <button class="btn bookmark"><i class='bx bxs-bookmark-star'></i></button>
+                <button class="btn toggle-mode">
+                    <i class='bx bxs-moon' ></i>
+                </button>
+                <button class="btn mult-1">1.0x</button>
+                <button class="btn detail"><i class='bx bx-detail'></i></button>
             </footer>
         </div>
+        <audio src="music/abule.mp3" autoplay loop controls id="audio"></audio>
 
     </main>
-    
+    <script src="app.js"></script>
 </body>
 </html>
