@@ -10,7 +10,7 @@
     <title>Music App </title>
 </head>
 <body>
-    <main class="main">
+    <main class="main light">
         <div class="music-container">
             <!-- NAVBAR -->
             <nav class="navbar">
@@ -18,7 +18,7 @@
                     <i class='bx bx-left-arrow-alt' ></i>
                 </button>
 
-                <h3 class="shelf">My books</h3>
+                <h3 class="shelf"></h3>
 
                 <button class="list-Btn">&#183;&#183;&#183;</button>
             </nav>
@@ -42,8 +42,8 @@
                 <input type="range" name="" id="range" min="0" max="100" value="50">
             </div>
             <div class="progress-time">
-                <small class="time">00:03:33</small>
-                <small class="default">left in the character</small>
+                <small class="time">00:00:00</small>
+                <small class="default"><span class="minutes">00</span>:<span class="secs">00</span></small>
             </div>
             <div class="controls">
                 <!-- previous button -->
@@ -53,8 +53,9 @@
                 <!-- backward with 30s -->
                 <button class="controlBtn sub">-30s</button>
                 <!-- pause and play button -->
-                <button class="controlBtn play">play
-                    <i class='bx bx-pause'></i>
+                <button class="controlBtn play">
+                    <span class="playicon "><i class='bx bx-play'></i></span>
+                    <span class="pauseicon hide"><i class='bx bx-pause'></i></span>
                 </button>
                 <!-- forward with 30s -->
                 <button class="controlBtn add">+30s</button>
@@ -71,8 +72,9 @@
                 <button class="btn mult-1">1.0x</button>
                 <button class="btn detail"><i class='bx bx-detail'></i></button>
             </footer>
+            <!-- <div class="overlay"></div> -->
         </div>
-        <audio src="music/abule.mp3" autoplay loop controls id="audio"></audio>
+        <audio src="music/abule.mp3" autoplay  loop controls id="audio"></audio>
 
     </main>
     <script src="app.js"></script>

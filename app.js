@@ -6,201 +6,181 @@ const musicTitle = document.querySelector('.song-title');
 const time = document.querySelector('.time');
 const btns = document.querySelectorAll('.controlBtn');
 const audio = document.getElementById('audio');
+const playBtn = document.querySelector('.playicon');
+const pauseBtn = document.querySelector('.pauseicon'); 
+const songDurationMinute= document.querySelector('.minutes')
+const songDurationseconds = document.querySelector('.secs')
+// console.log(songDurationMinute,songDurationseconds);
 
-// console.log(audio.control)
 
 //music file
 //images and song titles
 
 const songs = [
     {
-    music:'abule',
-    artistName: 'patoranking',
-    title:'ABULE',
-    Image: 'images/product-03.jpg'
-
-},
+        music: 'abule',
+        artistName: 'patoranking',
+        title: 'ABULE',
+        Image: 'images/product-03.jpg',
+    },
     {
-    music:'hate-me',
-    artistName: 'olamide ft wande coal',
-    title:'Hate me',
-    Image: 'images/product-04.jpg'
-    
-
-},
+        music: 'hate-me',
+        artistName: 'olamide ft wande coal',
+        title: 'Hate me',
+        Image: 'images/product-04.jpg',
+    },
     {
-    music:'owo',
-    artistName: 'olatop ekula',
-    title:'Owo',
-    Image: 'images/product-11.jpg'
-
-
-},
+        music: 'owo',
+        artistName: 'olatop ekula',
+        title: 'Owo',
+        Image: 'images/product-11.jpg',
+    },
     {
-    music:'rich-and-famous',
-    artistName: 'olamide',
-    title:'Rich And Famous',
-    Image: 'images/product-10.jpg'
-    ,
-
-},
+        music: 'rich-and-famous',
+        artistName: 'olamide',
+        title: 'Rich And Famous',
+        Image: 'images/product-10.jpg',
+    },
     {
-    music:'sitting-on-the-throne',
-    artistName: 'olamide',
-    title:'Sitting on the throne',
-    Image: 'images/product-09.jpg'
-
-
-},
-]
+        music: 'sitting-on-the-throne',
+        artistName: 'olamide',
+        title: 'Sitting on the throne',
+        Image: 'images/product-09.jpg',
+    },
+];
 
 // initial count 
-let song = 0
-//  function playSong() {
-//         audio.play()
-//         console.log('play');
-// }
-//     function pauseSong() {
-//         audio.pause()
-//         console.log('pause');
-// }
-// const play = document.querySelector('.play')
-//     play.addEventListener('click', () => {
-//         const pause = musicImage.classList.contains('pause')
-//         console.log(pause);
-//         if (pause) {
-//             musicImage.classList.remove('pause')
-//             musicImage.classList.add('rotate')
+// let duration = audio.duration
+// console.log(duration);
+let song = 0;
+let playing;
+function playSong() {
+
+    musicImage.classList.remove('pause');
+    musicImage.classList.add('rotate');
+    playBtn.classList.add('hide');
+    
+    pauseBtn.classList.remove('hide');
+    playing = true;
+    // songDuration.textContent = audio.duration
+
+
+    audio.play();
+   
         
-//            playSong()
-//         } else {
-//             musicImage.classList.add('pause')
+};
+function pauseSong() {
+        
+    musicImage.classList.add('pause');
+    playBtn.classList.remove('hide');
+    pauseBtn.classList.add('hide');
             
-//             pauseSong()
-//         }
-//        })
+    playing = false;
+    audio.pause();
+};
+function timeUpdate() {
+    const { duration } = audio;
+    const minute =(Math.floor(duration/60))
+    songDurationMinute.textContent =minute
+
+    const seconds = Math.floor(duration % 60);
+    
+    (seconds < 9) ?
+        songDurationseconds.textContent = `0${seconds}` : songDurationseconds.textContent = seconds;
+
+    
+};
 
 //add event listenr for the control btns
 btns.forEach((btn) =>{
     btn.addEventListener('click',controls)
 })
 
-//function of the controll btn
+//function of the control btn
 function controls(e){
-   const controlsBtn = e.currentTarget
-   // makes the music image rotate
-   musicImage.classList.add('rotate')
-
-//    console.log(audio);
+    const controlsBtn = e.currentTarget
 
    //next button
    if(controlsBtn.classList.contains('next')){
-    song++
-    if(song > songs.length-1){
-        song =0
-    }
-    audio.src=loadSongs(songs[song].music);
-    // console.log(audio.src);
-    artistName.textContent = songs[song].artistName;
-    musicTitle.textContent=songs[song].title;
-    musicImage.src= songs[song].Image;
-    musicImage.classList.remove('pause')
+       song++;
+       
+        (song < songs.length-1) ? song++ : song = 0;
+        
+       
+       timeUpdate();
+       
+        audio.src=loadSongs(songs[song].music);
+        artistName.textContent = songs[song].artistName;
+        musicTitle.textContent = songs[song].title;
+        
+        musicImage.src= songs[song].Image;
+        musicImage.classList.remove('pause');
+        playSong();
+       
 
- 
+    //   if (playing === true) {
+    //            playSong()
+    //   } else {
+    //       pauseSong()
+    //        }
 
    }
    //previous button
    if(controlsBtn.classList.contains('prev')){
+       
 
-    song--
-    
-    if(song < 0){
-        song = songs.length-1
-    }
-    audio.src=loadSongs(songs[song].music)
-    artistName.textContent = songs[song].artistName
-    musicTitle.textContent=songs[song].title
-    musicImage.src= songs[song].Image
-    musicImage.classList.remove('pause')
+       (song > 0) ? song-- : song = songs.length - 1;
+       
+       timeUpdate()
+       
+        audio.src=loadSongs(songs[song].music);
+       musicTitle.textContent = songs[song].title;
+        artistName.textContent = songs[song].artistName;
+       
+       
+        musicImage.src= songs[song].Image;
+        musicImage.classList.remove('pause');
+       playSong();
+       
+    };
 
-   }
    if(controlsBtn.classList.contains('add')){
+        audio.currentTime += 30.00
+       
+        playSong();
     
-    audio.play()
-    loadSongs(songs[song].music);
-    musicImage.classList.remove('pause')
-}
+    };
+    
+    if (controlsBtn.classList.contains('sub')) {
+
+        (audio.currentTime > 30) ? audio.currentTime -= 30 : audio.currentTime = 0;
+        
+    };
    
 //play button
     if (controlsBtn.classList.contains('play')) {
-        const pause = musicImage.classList.contains('pause')
-        // console.log(pause);
-      const playBtn=  document.querySelector('.play')
-        if (pause) {
-            musicImage.classList.remove('pause')
-            musicImage.classList.add('rotate')
-            playBtn.textContent = 'pause';
-            console.log(audio.duration/60);
 
+        const pause = musicImage.classList.contains('pause');
 
-        
-            audio.play()
-        } else {
-            musicImage.classList.add('pause')
-             playBtn.textContent='play'
-            
-            
-            audio.pause()
-        }
-
-        
-    //     const playing = musicImage.classList.add('rotate')
-    //     if (playing){
-    //        pauseSong()
-    //     } else {
-    //         playSong()
-    //     }
-    
        
-    //     const play = audio.play();
-    //     const pause = audio.pause();
-    //     console.dir(audio)
+        (pause) ? playSong() : pauseSong()
+        timeUpdate()
+       
         
-    // console.log(typeof pause);
-    
-    // if(play){
-    //     console.log('play');
-    //    return pause
-    //     // musicImage.classList.add('pause')
-    //     // musicImage.classList.remove('rotate')
+    };
+ 
 
-    //     // console.log(typeof pause);
-
-
-    // } else {
-    //     play
-    // }
-    
-    
-    ;
-    
-   }
-// console.log(songs[song]);
-//    console.log(controlsBtn);
-}
+};
 
 // function loadSongs 
 function loadSongs(track){
-    const music = `music/${track}.mp3`
-return music
+    const music = `music/${track}.mp3`;
+ 
+    return music;
+};
+function nextMusic() {
+    
+
+
 }
-// console.log(loadSongs(songs[song].music))
-
-// function names(e){
-//     console.log(e);
-// }
-// list.addEventListener('timeupdate',names)
-// console.log(document)
-
-// update time 
-console.log(audio.timeupdate);
+window.addEventListener('load',timeUpdate)
