@@ -7,8 +7,8 @@ const time = document.querySelector('.time');
 const btns = document.querySelectorAll('.controlBtn');
 const audio = document.getElementById('audio');
 const playBtn = document.querySelector('.playicon');
-const pauseBtn = document.querySelector('.pauseicon'); 
-const songDurationMinute= document.querySelector('.minutes')
+const pauseBtn = document.querySelector('.pauseicon');
+const songDurationMinute = document.querySelector('.minutes')
 const songDurationseconds = document.querySelector('.secs')
 // console.log(songDurationMinute,songDurationseconds);
 
@@ -49,9 +49,10 @@ const songs = [
     },
 ];
 
-// initial count 
-// let duration = audio.duration
-// console.log(duration);
+// initial count
+
+window.addEventListener('load', timeUpdate)
+
 let song = 0;
 let playing;
 function playSong() {
@@ -59,128 +60,133 @@ function playSong() {
     musicImage.classList.remove('pause');
     musicImage.classList.add('rotate');
     playBtn.classList.add('hide');
-    
+
     pauseBtn.classList.remove('hide');
     playing = true;
     // songDuration.textContent = audio.duration
 
 
     audio.play();
-   
-        
+
+
 };
 function pauseSong() {
-        
+
     musicImage.classList.add('pause');
     playBtn.classList.remove('hide');
     pauseBtn.classList.add('hide');
-            
+
     playing = false;
     audio.pause();
 };
 function timeUpdate() {
     const { duration } = audio;
-    const minute =(Math.floor(duration/60))
-    songDurationMinute.textContent =minute
+
+    const minute = (Math.floor(duration / 60));
+
+    (minute < 9) ?
+        songDurationMinute.textContent = `0${minute}` :
+        songDurationMinute.textContent = minute;
 
     const seconds = Math.floor(duration % 60);
     
     (seconds < 9) ?
-        songDurationseconds.textContent = `0${seconds}` : songDurationseconds.textContent = seconds;
+        songDurationseconds.textContent = `0${seconds}` :
+        songDurationseconds.textContent = seconds;
 
-    
+
 };
 
 //add event listenr for the control btns
-btns.forEach((btn) =>{
-    btn.addEventListener('click',controls)
+btns.forEach((btn) => {
+    btn.addEventListener('click', controls)
 })
 
 //function of the control btn
-function controls(e){
+function controls(e) {
     const controlsBtn = e.currentTarget
 
-   //next button
-   if(controlsBtn.classList.contains('next')){
-       song++;
+    //next button
+    if (controlsBtn.classList.contains('next')) {
        
-        (song < songs.length-1) ? song++ : song = 0;
-        
-       
-       timeUpdate();
-       
-        audio.src=loadSongs(songs[song].music);
+        (song < songs.length - 1) ? song++ : song = 0;
+
+
+        timeUpdate();
+
+        audio.src = loadSongs(songs[song].music);
         artistName.textContent = songs[song].artistName;
         musicTitle.textContent = songs[song].title;
-        
-        musicImage.src= songs[song].Image;
+
+        musicImage.src = songs[song].Image;
         musicImage.classList.remove('pause');
         playSong();
-       
 
-    //   if (playing === true) {
-    //            playSong()
-    //   } else {
-    //       pauseSong()
-    //        }
 
-   }
-   //previous button
-   if(controlsBtn.classList.contains('prev')){
-       
 
-       (song > 0) ? song-- : song = songs.length - 1;
-       
-       timeUpdate()
-       
-        audio.src=loadSongs(songs[song].music);
-       musicTitle.textContent = songs[song].title;
+        //   if (playing === true) {
+        //            playSong()
+        //   } else {
+        //       pauseSong()
+        //        }
+
+    }
+    //previous button
+    if (controlsBtn.classList.contains('prev')) {
+
+
+        (song > 0) ? song-- : song = songs.length - 1;
+
+        timeUpdate()
+
+        audio.src = loadSongs(songs[song].music);
+        musicTitle.textContent = songs[song].title;
         artistName.textContent = songs[song].artistName;
-       
-       
-        musicImage.src= songs[song].Image;
+
+
+        musicImage.src = songs[song].Image;
         musicImage.classList.remove('pause');
-       playSong();
-       
+        playSong();
+
+
     };
 
-   if(controlsBtn.classList.contains('add')){
+    if (controlsBtn.classList.contains('add')) {
         audio.currentTime += 30.00
-       
+
         playSong();
-    
+
     };
-    
+
     if (controlsBtn.classList.contains('sub')) {
 
         (audio.currentTime > 30) ? audio.currentTime -= 30 : audio.currentTime = 0;
-        
+
     };
-   
-//play button
+
+    //play button
     if (controlsBtn.classList.contains('play')) {
 
         const pause = musicImage.classList.contains('pause');
 
-       
+
         (pause) ? playSong() : pauseSong()
         timeUpdate()
-       
-        
+
+
     };
- 
+
 
 };
 
 // function loadSongs 
-function loadSongs(track){
+function loadSongs(track) {
     const music = `music/${track}.mp3`;
- 
+
     return music;
 };
 function nextMusic() {
-    
+
 
 
 }
-window.addEventListener('load',timeUpdate)
